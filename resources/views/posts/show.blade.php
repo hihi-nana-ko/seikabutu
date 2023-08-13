@@ -20,5 +20,6 @@
         <div class="footer">
             <a href="/">戻る</a>
         </div>
+        <div class="edit"><a href="/posts/{{ $post->id }}/edit">編集</a></div>
     </body>
 </html>
