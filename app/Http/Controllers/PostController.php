@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\Category;
-use App\Http\Requests\PostRequest; // useする
+use App\Http\Requests\PostRequest;
+use Illuminate\Http\Request;
+use Cloudinary;// useする
 
 class PostController extends Controller
 {
@@ -13,9 +15,9 @@ class PostController extends Controller
         return view('posts.index')->with(['posts' => $post->getPaginateByLimit()]);
     }
 
-    public function show(Post $post)
+    public function show(Post $post,Category $category)
     {
-        return view('posts.show')->with(['post' => $post]);
+        return view('posts.show')->with(['post' => $post,'category'=>$category]);
     }
 
     public function create(Category $category)
@@ -23,9 +25,14 @@ class PostController extends Controller
         return view('posts.create')->with(['categories'=>$category->get()]);
     }
 
-    public function store(Post $post, PostRequest $request) // 引数をRequestからPostRequestにする
+    public function store(Request $request, Post $post)
     {
-        $input = $request['post'];
+      
+       $input = $request['post'];
+        if($request->file('image')){ //画像ファイルが送られた時だけ処理が実行される
+            $image_url = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
+            $input += ['image_url' => $image_url];
+        }
         $post->fill($input)->save();
         return redirect('/posts/' . $post->id);
     }
