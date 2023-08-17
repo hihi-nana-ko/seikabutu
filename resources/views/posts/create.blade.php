@@ -6,7 +6,8 @@
     </head>
     <body>
         <h1>隠れスポット</h1>
-        <form action="/posts" method="POST">
+       <form action="/posts" method="POST" enctype="multipart/form-data">
+    
             @csrf
             <div class="title">
                 <h2>穴場のパワースポット</h2>
@@ -18,10 +19,14 @@
                 <textarea name="post[body]" placeholder="パワースポットでの感想">{{ old('post.body') }}</textarea>
                 <p class="body__error" style="color:red">{{ $errors->first('post.body') }}</p>
             </div>
+                   <div class="image">
+                     <input type="file" name="image">
+                    </div>
             <div class="category">
                 <h2>都道府県</h2>
             <select name="post[category_id]">
                 @foreach($categories as $category)
+               
                     <option value="{{ $category->id }}">{{ $category->prefecture }}</option>
                 @endforeach
             </select>
