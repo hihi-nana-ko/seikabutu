@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<x-app-layout>
+    <x-slot name="header">
+        隠れスポット
+        </x-slot>
+        <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
         <title>隠れスポット</title>
@@ -10,6 +14,13 @@
         <h1>隠れスポット</h1>
         <div class='posts'>
             <a href='/posts/create'>投稿</a>
+            <div>
+  <form action="{{ route('index') }}" method="GET">
+    <input type="text"name="keyword" value="{{ $keyword }}">
+    <input type="submit" value="検索">
+  </form>
+</div>
+
             @foreach ($posts as $post)
                 <div class='post'>
                     <h2 class='title'>
@@ -20,6 +31,7 @@
     @csrf
     @method('DELETE')
     <button type="button" onclick="deletePost({{ $post->id }})">削除</button> 
+
 </form>
 <script>
     function deletePost(id) {
@@ -34,8 +46,9 @@
             @endforeach
             
         </div>
-        <div class='paginate'>
+        {{--<div class='paginate'>
             {{ $posts->links() }}
-        </div>
+        </div>--}}
     </body>
 </html>
+</x-app-layout>

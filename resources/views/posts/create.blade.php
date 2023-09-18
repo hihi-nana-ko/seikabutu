@@ -1,4 +1,8 @@
 <!DOCTYPE HTML>
+<x-app-layout>
+    <x-slot name="header">
+        隠れスポット
+         </x-slot>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
@@ -36,3 +40,4 @@
         <div class="back">[<a href="/">戻る</a>]</div>
     </body>
 </html>
+</x-app-layout>
